@@ -67,49 +67,55 @@ const SmurfForm = (props) =>{
 
     // const [state, dispatch] = useReducer(reducer, initialState);
 
-    const [formState, setFormState] = useState(props.smurfSubmit.name)
+    const [formState, setFormState] = useState({
+        name: '',
+        age: 0,
+        height: ''
+    })
 
     const handleSubmit = (event) =>{
         event.preventDefault();
-
-        console.log(event)
-        axios
-    .post(`http://localhost:3333/smurfs`, {
+        const newSmurf = {
+            name: formState.name,
+            age: formState.age,
+            height: formState.height
+        }
+        console.log(newSmurf)
+    // axios
+    // .post(`http://localhost:3333/smurfs`, {
+    //     name: newSmurf.name,
+    //     age: newSmurf.age,
+    //     height: newSmurf.height
+    // })
+    // .then(res =>{
         
-    })
-    .then(res =>{
-        
-        console.log(res)
-    })
-    .catch(error => {
-        console.log(error)
-    })
+    //     console.log(res)
+    // })
+    // .catch(error => {
+    //     console.log(error)
+    // })
+        props.postSmurf(newSmurf)
     }
 
     const handelChange = (event) => {
         setFormState({...formState, [event.target.name]: event.target.value})
     }
-    const handleAge = (event) => {
-        setFormState({...formState,[event.target.age]: event.target.value})
-    }
-    const handleH = (event) => {
-        setFormState({...formState,[event.target.height]: event.target.value})
-    }
-// console.log(state)
+
+console.log(formState)
     return(
         <div>
             <form onSubmit={event => handleSubmit(event)}>
                 <label>
                     Name:
-                    <input type="text" value={formState.name} onChange={event =>handelChange(event)}/>
+                    <input type="text" name="name" value={formState.name} onChange={event =>handelChange(event)}/>
                 </label>
                 <label>
                     Age:
-                    <input type="text" value={formState.age} onChange={event => handleAge(event)}/>
+                    <input type="text" name="age" value={formState.age} onChange={event => handelChange(event)}/>
                 </label>
                 <label>
                     Height:
-                    <input type="text" value={formState.height} onChange={event => handleH(event)}/>
+                    <input type="text" name="height" value={formState.height} onChange={event => handelChange(event)}/>
                 </label>
                 <button type="submit">submit</button>
             </form>
